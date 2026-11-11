@@ -14,7 +14,705 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=Kalam:wght@700&family=Noto+Nastaliq+Urdu:wght@500&family=Pacifico&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css" />
+    <style>
+:root {
+  --ui: "Inter", "SF Pro Text", "Helvetica Neue", sans-serif;
+  --hello: "Pacifico", "Kalam", "Noto Nastaliq Urdu", cursive;
+  --serif: "Fraunces", Georgia, serif;
+  --ink: #1d1d1f;
+  --muted: #6e6e73;
+  --line: rgba(0, 0, 0, 0.08);
+  --red: #ff5f57;
+  --yellow: #febc2e;
+  --green: #28c840;
+  --lilac: #e7d6f4;
+  --paper: #f3f4f6;
+  --grid: rgba(70, 70, 80, 0.11);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--ui);
+  background: var(--lilac);
+  color: var(--ink);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+a {
+  color: #0b57d0;
+}
+
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  overflow: visible;
+  background: #e8b89a;
+  transition: opacity 0.45s ease;
+}
+
+.boot.is-done {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hello-word {
+  margin: 0;
+  max-width: 92vw;
+  font-size: clamp(4.2rem, 14vw, 9.4rem);
+  line-height: 1.2;
+  text-align: center;
+  font-weight: 400;
+  background-image: linear-gradient(
+    90deg,
+    #3ec6ef 0%,
+    #7ed957 22%,
+    #ffd23f 42%,
+    #ff7a32 62%,
+    #e23d88 80%,
+    #3b3adf 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 12px 18px rgba(90, 40, 20, 0.16));
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.hello-word.is-on {
+  opacity: 1;
+  transform: none;
+}
+
+.hello-word.is-rtl {
+  direction: rtl;
+}
+
+.skip-boot {
+  position: absolute;
+  right: 32px;
+  bottom: 32px;
+  min-height: 48px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(70, 30, 20, 0.22);
+  color: #4a2a1c;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.skip-boot:hover,
+.skip-boot:focus-visible {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.stage {
+  height: 100%;
+  padding: 22px;
+  display: grid;
+}
+
+.mac-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 30px 80px rgba(80, 40, 110, 0.18);
+  overflow: hidden;
+}
+
+.shell-bar {
+  height: 16px;
+  flex: 0 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 12px;
+  background: #f2f2f2;
+}
+
+.tl {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.tl.close {
+  background: var(--red);
+}
+.tl.min {
+  background: var(--yellow);
+}
+.tl.max {
+  background: var(--green);
+}
+
+.desktop {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  background: var(--paper);
+}
+
+.wallpaper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-color: #eef0f3;
+}
+
+.menubar {
+  position: relative;
+  z-index: 8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 32px;
+  padding: 0 14px;
+  background: rgba(246, 247, 249, 0.86);
+  backdrop-filter: blur(16px);
+  font-size: 13px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.menubar-left,
+.menubar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.menu-mark {
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  background: #111;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
+
+.menu-app {
+  font-weight: 700;
+}
+
+.status-glyph {
+  opacity: 0.55;
+  font-size: 12px;
+}
+
+.clock {
+  font-variant-numeric: tabular-nums;
+  color: #3a3a3c;
+}
+
+.sticky {
+  position: absolute;
+  top: 54px;
+  left: 28px;
+  z-index: 3;
+  width: 200px;
+  padding: 16px 16px 18px;
+  background: #ffe566;
+  box-shadow: 2px 8px 18px rgba(0, 0, 0, 0.12);
+  transform: rotate(-2.2deg);
+  font-size: 12.5px;
+  line-height: 1.45;
+  animation: pop 0.6s 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.sticky-title {
+  margin: 0 0 6px;
+  font-weight: 700;
+}
+
+.sticky ul {
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.hero {
+  position: absolute;
+  inset: 0 0 90px;
+  z-index: 2;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  pointer-events: none;
+  text-align: center;
+}
+
+.hero-kicker {
+  margin: 0;
+  font-size: clamp(1.4rem, 3vw, 2.1rem);
+  font-weight: 400;
+}
+
+.hero h1 {
+  margin: 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(3.4rem, 8vw, 6.4rem);
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+.desktop-icons {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.desk-icon {
+  position: absolute;
+  pointer-events: auto;
+  width: 92px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #222;
+}
+
+.desk-icon.is-selected span:last-child {
+  background: #0a84ff;
+  color: #fff;
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+
+.pos-resume {
+  left: 11%;
+  top: 58%;
+}
+.pos-about {
+  left: 22%;
+  top: 68%;
+}
+.pos-ux {
+  right: 22%;
+  top: 18%;
+}
+.pos-soft {
+  right: 8%;
+  top: 28%;
+}
+.pos-personal {
+  right: 28%;
+  top: 62%;
+}
+.pos-trash {
+  right: 9%;
+  top: 64%;
+}
+
+.icon-folder,
+.icon-doc,
+.icon-trash {
+  display: block;
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.15));
+}
+
+.icon-folder {
+  width: 58px;
+  height: 44px;
+  background: linear-gradient(#7ec8f8, #4ba3e3);
+  border-radius: 3px 6px 6px 6px;
+  position: relative;
+}
+
+.icon-folder::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: -8px;
+  width: 20px;
+  height: 12px;
+  background: #93d2fb;
+  border-radius: 3px 8px 0 0;
+}
+
+.icon-doc {
+  width: 42px;
+  height: 54px;
+  background: linear-gradient(#fff, #ececf1);
+  border-radius: 4px;
+  position: relative;
+}
+
+.icon-doc::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 14px;
+  height: 22px;
+  background: repeating-linear-gradient(#c9c9d1, #c9c9d1 2px, transparent 2px, transparent 6px);
+}
+
+.icon-trash {
+  width: 40px;
+  height: 48px;
+  background: linear-gradient(#f2f2f4, #c9c9ce);
+  border-radius: 0 0 8px 8px;
+  position: relative;
+}
+
+.icon-trash::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  top: -6px;
+  height: 8px;
+  border-radius: 3px;
+  background: #d8d8de;
+}
+
+.windows {
+  position: absolute;
+  inset: 32px 0 96px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.window {
+  position: absolute;
+  pointer-events: auto;
+  min-width: 280px;
+  background: #f6f6f8;
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.08),
+    0 24px 60px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: window-in 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.window.is-min {
+  animation: window-min 0.35s ease forwards;
+  pointer-events: none;
+}
+
+.window.is-max {
+  inset: 10px !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+@keyframes window-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(12px);
+  }
+}
+
+@keyframes window-min {
+  to {
+    opacity: 0;
+    transform: translateY(30vh) scale(0.2);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: rotate(-2.2deg) scale(0.92);
+  }
+}
+
+.titlebar {
+  display: grid;
+  grid-template-columns: 68px 1fr 68px;
+  align-items: center;
+  height: 38px;
+  background: linear-gradient(#f7f7f8, #ececee);
+  cursor: grab;
+  user-select: none;
+}
+
+.traffic {
+  display: flex;
+  gap: 8px;
+  padding-left: 12px;
+}
+
+.window-title {
+  margin: 0;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #3a3a3c;
+}
+
+.window-body {
+  flex: 1;
+  overflow: auto;
+  background: #fff;
+}
+
+.finder {
+  display: grid;
+  grid-template-columns: 168px 1fr;
+  min-height: 320px;
+  height: 100%;
+}
+
+.sidebar {
+  background: #f4f4f6;
+  border-right: 1px solid var(--line);
+  padding: 14px 10px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.sidebar strong {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0 8px 8px;
+}
+
+.sidebar button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+
+.sidebar button.is-on,
+.sidebar button:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--ink);
+}
+
+.files {
+  padding: 18px;
+}
+
+.empty {
+  color: var(--muted);
+  text-align: center;
+  padding: 48px 16px;
+}
+
+.note,
+.resume,
+.about-card {
+  padding: 28px 32px 40px;
+  max-width: 720px;
+  line-height: 1.55;
+}
+
+.note h3,
+.resume h3,
+.about-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.35rem;
+}
+
+.resume h4 {
+  margin: 22px 0 6px;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dock-wrap {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  z-index: 9;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.open-me {
+  margin: 0;
+  font-size: 13px;
+  color: #444;
+}
+
+.dock {
+  display: flex;
+  gap: 8px;
+  padding: 8px 10px 7px;
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 22px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(18px);
+}
+
+.dock-item {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  transition: transform 160ms ease;
+}
+
+.dock-item:hover {
+  transform: translateY(-7px) scale(1.12);
+}
+
+.app {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  display: block;
+  overflow: hidden;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.16);
+}
+
+.app::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  top: 2px;
+  height: 42%;
+  border-radius: 8px 8px 40% 40%;
+  background: linear-gradient(rgba(255, 255, 255, 0.5), transparent);
+}
+
+.app-finder {
+  background: linear-gradient(#6ec8ff, #1a7fd4);
+}
+.app-notes {
+  background: linear-gradient(#fff6a8, #f2c94c);
+}
+.app-code {
+  background: linear-gradient(#3a3a40, #1c1c1e);
+}
+.app-doc {
+  background: linear-gradient(#8ad0ff, #3b82f6);
+}
+.app-mail {
+  background: linear-gradient(#5eead4, #0d9488);
+}
+.app-trash {
+  background: linear-gradient(#e5e7eb, #9ca3af);
+}
+
+.dock-label {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(40, 40, 40, 0.9);
+  color: #fff;
+  font-size: 11px;
+  padding: 3px 7px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dock-item:hover .dock-label {
+  opacity: 1;
+}
+
+@media (max-width: 800px) {
+  .stage {
+    padding: 0;
+  }
+
+  .mac-shell {
+    border-radius: 0;
+  }
+
+  .sticky {
+    display: none;
+  }
+
+  .menubar-left button:not(.menu-mark) {
+    display: none;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+  }
+
+  .pos-ux,
+  .pos-soft,
+  .pos-personal {
+    right: 8px;
+  }
+
+  .window {
+    left: 8px !important;
+    right: 8px !important;
+    width: auto !important;
+    top: 44px !important;
+  }
+
+  .finder {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hello,
+  .stage,
+  .window,
+  .sticky {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}
+    </style>
   </head>
   <body>
     <div id="boot" class="boot" aria-hidden="false">
@@ -140,6 +838,286 @@
       </section>
     </template>
 
-    <script src="js/main.js"></script>
+    <script>
+const HELLOS = [
+  { text: "hello", font: "Pacifico" },
+  { text: "नमस्ते", font: "Kalam" },
+  { text: "hola", font: "Pacifico" },
+  { text: "سلام", font: "Noto Nastaliq Urdu", rtl: true },
+];
+
+const windowsRoot = document.getElementById("windows");
+const template = document.getElementById("window-template");
+const clock = document.getElementById("clock");
+const boot = document.getElementById("boot");
+const helloWord = document.getElementById("hello-word");
+
+let z = 10;
+let awake = false;
+let helloTimer = null;
+const openIds = new Map();
+
+const content = {
+  ux: {
+    title: "UX Projects",
+    width: 640,
+    height: 420,
+    html: finder("UX Projects", "No case studies in this folder yet. This is where new UX work will live."),
+  },
+  software: {
+    title: "Software",
+    width: 640,
+    height: 420,
+    html: finder("Software", "Empty on purpose. Drop software projects in here as we build them."),
+  },
+  personal: {
+    title: "Personal",
+    width: 560,
+    height: 460,
+    html: `
+      <div class="note">
+        <h3>A few true things</h3>
+        <p>I’m Sumairah. I design and I write code, usually in the same week. I like products that feel obvious once they exist and impossible right before.</p>
+        <p>Right now I’m in Washington, DC, doing an MS in Computer Science at GWU. Before that: UX/UI at ZMQ, an intern summer at Tenstorrent, Android at Qaff, and a lot of figuring it out in public.</p>
+        <p>This desktop is the portfolio. Folders first, case studies next. If you want the human version, that’s this window.</p>
+        <p><a href="mailto:Sumairahrahman02@gmail.com">Sumairahrahman02@gmail.com</a><br />
+        <a href="https://www.linkedin.com/in/sumairahrahman/">LinkedIn</a></p>
+      </div>`,
+  },
+  resume: {
+    title: "Resume.pdf",
+    width: 560,
+    height: 520,
+    html: `
+      <div class="resume">
+        <h3>Sumairah Rahman</h3>
+        <p>UX/UI · Product · Computer Science<br />Washington, DC</p>
+        <h4>Education</h4>
+        <p>MS Computer Science, The George Washington University (2025–present)<br />BTech Computer Science, Amity University (2020–2024)</p>
+        <h4>Experience</h4>
+        <p><strong>Tenstorrent</strong> — AI Workflow Automation Intern, 2026<br />Built an internal forecasting app for headcount and budget visibility in the Office of the CEO.</p>
+        <p><strong>ZMQ Development</strong> — UX/UI Designer, 2024<br />Designed interfaces for nonprofit technology with research, product, and engineering.</p>
+        <p><strong>Qaff Technology</strong> — Mobile App Developer Intern, 2023<br />Android in Java/Kotlin; load times down about 30%.</p>
+        <h4>Skills</h4>
+        <p>Figma, user research, UI design, React, HTML/CSS, Python, Swift, Java</p>
+      </div>`,
+  },
+  "about-mac": {
+    title: "About this Mac",
+    width: 420,
+    height: 280,
+    html: `
+      <div class="about-card">
+        <h3>Sumairah’s Mac</h3>
+        <p>A first boot, then a desktop, then folders that are actually the work. Low-key grid paper. High-key motion.</p>
+      </div>`,
+  },
+  contact: {
+    title: "Contact",
+    width: 420,
+    height: 260,
+    html: `
+      <div class="about-card">
+        <h3>Say hi</h3>
+        <p><a href="mailto:Sumairahrahman02@gmail.com">Sumairahrahman02@gmail.com</a></p>
+        <p><a href="https://www.linkedin.com/in/sumairahrahman/">LinkedIn</a></p>
+      </div>`,
+  },
+  trash: {
+    title: "Don’t Look",
+    width: 420,
+    height: 260,
+    html: `
+      <div class="about-card">
+        <h3>Told you.</h3>
+        <p>Old Framer tabs, abandoned type samples, and three versions of this desktop. Nothing to see. Close the window.</p>
+      </div>`,
+  },
+};
+
+function finder(place, empty) {
+  return `
+    <div class="finder">
+      <aside class="sidebar">
+        <strong>Favorites</strong>
+        <button type="button" class="is-on">${place}</button>
+        <button type="button" data-open="personal">Personal</button>
+        <button type="button" data-open="resume">Resume</button>
+      </aside>
+      <div class="files">
+        <p class="empty">${empty}</p>
+      </div>
+    </div>`;
+}
+
+function tickClock() {
+  const now = new Date();
+  clock.textContent = now.toLocaleString("en-US", {
+    weekday: "long",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
+function openWindow(id, origin) {
+  if (openIds.has(id)) {
+    const existing = openIds.get(id);
+    existing.classList.remove("is-min");
+    focusWindow(existing);
+    return;
+  }
+
+  const spec = content[id];
+  if (!spec) return;
+
+  const node = template.content.firstElementChild.cloneNode(true);
+  node.dataset.id = id;
+  const area = windowsRoot.getBoundingClientRect();
+  const left = Math.max(16, Math.min((area.width - spec.width) / 2 + openIds.size * 28, area.width - spec.width - 16));
+  node.style.width = spec.width + "px";
+  node.style.height = spec.height + "px";
+  node.style.left = left + "px";
+  node.style.top = 28 + openIds.size * 26 + "px";
+  node.querySelector(".window-title").textContent = spec.title;
+  node.querySelector(".window-body").innerHTML = spec.html;
+  windowsRoot.appendChild(node);
+  openIds.set(id, node);
+  focusWindow(node);
+  bindWindow(node);
+
+  if (origin) {
+    const r = origin.getBoundingClientRect();
+    node.style.transformOrigin = `${r.left}px ${r.top}px`;
+  }
+}
+
+function focusWindow(node) {
+  z += 1;
+  node.style.zIndex = String(z);
+  node.focus();
+}
+
+function closeWindow(id) {
+  const node = openIds.get(id);
+  if (!node) return;
+  node.remove();
+  openIds.delete(id);
+}
+
+function bindWindow(node) {
+  const id = node.dataset.id;
+  node.addEventListener("mousedown", () => focusWindow(node));
+
+  node.querySelector('[data-action="close"]').addEventListener("click", () => closeWindow(id));
+  node.querySelector('[data-action="min"]').addEventListener("click", () => {
+    node.classList.add("is-min");
+    setTimeout(() => {
+      node.style.display = "none";
+    }, 280);
+  });
+  node.querySelector('[data-action="max"]').addEventListener("click", () => {
+    node.classList.toggle("is-max");
+  });
+
+  const bar = node.querySelector(".titlebar");
+  let drag = null;
+  bar.addEventListener("pointerdown", (event) => {
+    if (event.target.closest(".tl") || node.classList.contains("is-max")) return;
+    drag = {
+      x: event.clientX - node.offsetLeft,
+      y: event.clientY - node.offsetTop,
+    };
+    bar.setPointerCapture(event.pointerId);
+  });
+  bar.addEventListener("pointermove", (event) => {
+    if (!drag) return;
+    node.style.left = event.clientX - drag.x + "px";
+    node.style.top = Math.max(28, event.clientY - drag.y) + "px";
+  });
+  bar.addEventListener("pointerup", () => {
+    drag = null;
+  });
+}
+
+function onOpenClick(event) {
+  const trigger = event.currentTarget;
+  const id = trigger.dataset.open;
+  const icon = trigger.closest(".desk-icon");
+  if (icon) {
+    document.querySelectorAll(".desk-icon").forEach((el) => el.classList.remove("is-selected"));
+    icon.classList.add("is-selected");
+    if (event.detail < 2 && !window.matchMedia("(pointer: coarse)").matches) {
+      return;
+    }
+  }
+  openWindow(id, trigger);
+}
+
+function wireOpens(root = document) {
+  root.querySelectorAll("[data-open]").forEach((el) => {
+    el.addEventListener("click", onOpenClick);
+  });
+}
+
+function startDesktop() {
+  if (awake) return;
+  awake = true;
+  clearTimeout(helloTimer);
+  boot.classList.add("is-done");
+  boot.setAttribute("aria-hidden", "true");
+}
+
+function wait(ms) {
+  return new Promise((resolve) => {
+    helloTimer = setTimeout(resolve, ms);
+  });
+}
+
+async function runHello() {
+  tickClock();
+  setInterval(tickClock, 1000);
+  await document.fonts.ready;
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    helloWord.style.fontFamily = `"${HELLOS[0].font}"`;
+    helloWord.textContent = HELLOS[0].text;
+    helloWord.classList.add("is-on");
+    await wait(1200);
+    startDesktop();
+    return;
+  }
+
+  for (const item of HELLOS) {
+    if (awake) return;
+    helloWord.style.fontFamily = `"${item.font}"`;
+    helloWord.textContent = item.text;
+    helloWord.classList.toggle("is-rtl", Boolean(item.rtl));
+    helloWord.classList.add("is-on");
+    await wait(1400);
+    if (awake) return;
+    helloWord.classList.remove("is-on");
+    await wait(380);
+  }
+
+  startDesktop();
+}
+
+document.getElementById("skip-boot").addEventListener("click", startDesktop);
+document.querySelector(".wallpaper").addEventListener("click", () => {
+  document.querySelectorAll(".desk-icon").forEach((el) => el.classList.remove("is-selected"));
+});
+
+windowsRoot.addEventListener("click", (event) => {
+  const nested = event.target.closest("[data-open]");
+  if (!nested) return;
+  event.preventDefault();
+  openWindow(nested.dataset.open, nested);
+});
+
+wireOpens();
+runHello();
+    </script>
   </body>
 </html>
