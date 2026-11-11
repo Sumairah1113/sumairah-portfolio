@@ -6,104 +6,140 @@
     <title>Sumairah Rahman</title>
     <meta
       name="description"
-      content="The personal site of Sumairah Rahman, a designer and computer science student in Washington, DC."
+      content="Sumairah Rahman’s portfolio — a Mac desktop of UX work, software, personal notes, and a resume."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=Kalam:wght@700&family=Noto+Nastaliq+Urdu:wght@500&family=Pacifico&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <a class="skip" href="#work">Skip to work</a>
-    <header class="wrap nav">
-      <a class="logo" href="/">Sumairah Rahman</a>
-      <nav class="nav-links" aria-label="Primary">
-        <a href="#work">Work</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </header>
+    <div id="boot" class="boot" aria-hidden="false">
+      <p id="hello-word" class="hello-word" aria-live="polite"></p>
+      <button id="skip-boot" class="skip-boot" type="button">Skip</button>
+    </div>
 
-    <main>
-      <section class="wrap hero">
-        <p class="eyebrow">Washington, DC</p>
-        <h1>New work, built from scratch.</h1>
-        <p class="hero-copy">
-          This site is a blank studio. No leftover case studies. The next
-          projects we add here are the ones you actually want to show.
-        </p>
-      </section>
+    <div id="stage" class="stage">
+      <div class="mac-shell">
+        <div class="shell-bar" aria-hidden="true">
+          <span class="tl close"></span>
+          <span class="tl min"></span>
+          <span class="tl max"></span>
+        </div>
 
-      <section class="wrap section" id="work">
-        <div class="section-head">
-          <h2>Work</h2>
-          <span>Starting over</span>
-        </div>
-        <div class="empty-work">
-          <p>
-            Nothing here yet on purpose. Send the ideas you want on this site —
-            names, one-liners, audiences, even messy notes — and we’ll turn the
-            first one into a real project page.
-          </p>
-        </div>
-      </section>
+        <div id="desktop" class="desktop">
+          <header class="menubar" aria-label="Menu bar">
+            <div class="menubar-left">
+              <button class="menu-mark" type="button" data-open="about-mac" aria-label="About">S</button>
+              <span class="menu-app">Sumairah Rahman’s Portfolio</span>
+              <button type="button" data-open="contact">Contact</button>
+              <button type="button" data-open="resume">Resume</button>
+            </div>
+            <div class="menubar-right">
+              <span class="status-glyph" aria-hidden="true">◐</span>
+              <span class="status-glyph" aria-hidden="true">⌁</span>
+              <span id="clock" class="clock"></span>
+            </div>
+          </header>
 
-      <section class="wrap section" id="about">
-        <div class="section-head">
-          <h2>About</h2>
-        </div>
-        <div class="about-grid">
-          <div>
-            <p>
-              I’m Sumairah. I design and build products, and I’m completing an
-              MS in Computer Science at The George Washington University.
-            </p>
-            <p>
-              This page can stay short until the new work exists. We’ll rewrite
-              the bio to match whatever this portfolio becomes.
-            </p>
+          <button class="wallpaper" type="button" aria-label="Desktop"></button>
+
+          <aside class="sticky" aria-label="To do">
+            <p class="sticky-title">To do:</p>
+            <ul>
+              <li>Make this desktop feel like me</li>
+              <li>Drink water</li>
+              <li>Finish a case study I’m proud of</li>
+              <li>Stay playful without getting messy</li>
+              <li>Email people back</li>
+              <li>Go somewhere new</li>
+            </ul>
+          </aside>
+
+          <div class="hero">
+            <p class="hero-kicker">welcome to my</p>
+            <h1>portfolio.</h1>
           </div>
-          <div>
-            <article class="job">
-              <h3>Tenstorrent</h3>
-              <p class="when">AI Workflow Automation Intern · 2026</p>
-            </article>
-            <article class="job">
-              <h3>ZMQ Development</h3>
-              <p class="when">UX/UI Designer · 2024</p>
-            </article>
-            <article class="job">
-              <h3>Qaff Technology</h3>
-              <p class="when">Mobile App Developer Intern · 2023</p>
-            </article>
+
+          <div class="desktop-icons">
+            <button class="desk-icon pos-resume" data-open="resume" type="button">
+              <span class="icon-doc" aria-hidden="true"></span>
+              <span>Resume pdf</span>
+            </button>
+            <button class="desk-icon pos-about" data-open="personal" type="button">
+              <span class="icon-folder" aria-hidden="true"></span>
+              <span>About Me</span>
+            </button>
+            <button class="desk-icon pos-ux" data-open="ux" type="button">
+              <span class="icon-folder" aria-hidden="true"></span>
+              <span>UX Projects</span>
+            </button>
+            <button class="desk-icon pos-soft" data-open="software" type="button">
+              <span class="icon-folder" aria-hidden="true"></span>
+              <span>Software</span>
+            </button>
+            <button class="desk-icon pos-personal" data-open="personal" type="button">
+              <span class="icon-folder" aria-hidden="true"></span>
+              <span>Personal</span>
+            </button>
+            <button class="desk-icon pos-trash" data-open="trash" type="button">
+              <span class="icon-trash" aria-hidden="true"></span>
+              <span>Don’t Look</span>
+            </button>
+          </div>
+
+          <div id="windows" class="windows"></div>
+
+          <div class="dock-wrap">
+            <p class="open-me">open me</p>
+            <nav class="dock" aria-label="Dock">
+              <button class="dock-item" data-open="ux" type="button">
+                <span class="app app-finder"></span>
+                <span class="dock-label">UX Projects</span>
+              </button>
+              <button class="dock-item" data-open="personal" type="button">
+                <span class="app app-notes"></span>
+                <span class="dock-label">About Me</span>
+              </button>
+              <button class="dock-item" data-open="software" type="button">
+                <span class="app app-code"></span>
+                <span class="dock-label">Software</span>
+              </button>
+              <button class="dock-item" data-open="resume" type="button">
+                <span class="app app-doc"></span>
+                <span class="dock-label">Resume</span>
+              </button>
+              <button class="dock-item" data-open="contact" type="button">
+                <span class="app app-mail"></span>
+                <span class="dock-label">Contact</span>
+              </button>
+              <button class="dock-item" data-open="trash" type="button">
+                <span class="app app-trash"></span>
+                <span class="dock-label">Trash</span>
+              </button>
+            </nav>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
 
-      <section class="wrap section" id="contact">
-        <div class="contact-panel">
-          <div>
-            <p class="eyebrow" style="color: #ecd5c8">Contact</p>
-            <h2>Say hello.</h2>
+    <template id="window-template">
+      <section class="window" tabindex="-1">
+        <header class="titlebar">
+          <div class="traffic">
+            <button class="tl close" data-action="close" aria-label="Close"></button>
+            <button class="tl min" data-action="min" aria-label="Minimize"></button>
+            <button class="tl max" data-action="max" aria-label="Maximize"></button>
           </div>
-          <div class="contact-actions">
-            <a class="btn btn-light" href="mailto:Sumairahrahman02@gmail.com"
-              >Email me</a
-            >
-            <a
-              class="btn btn-ghost"
-              href="https://www.linkedin.com/in/sumairahrahman/"
-              >LinkedIn</a
-            >
-          </div>
-        </div>
+          <h2 class="window-title"></h2>
+        </header>
+        <div class="window-body"></div>
       </section>
-    </main>
+    </template>
 
-    <footer class="wrap footer">© 2026 Sumairah Rahman</footer>
     <script src="js/main.js"></script>
   </body>
 </html>
